@@ -1,6 +1,8 @@
-=== Katas
-These are just some training exercices.
+Katas
+=== 
+These are just some training exercices. http://en.wikipedia.org/wiki/Kata_(programming
 
-==== snowflake
-
+ 
+snowflake
+======
 To run just compile with gcc. It'll try to generate a random snowflake on your terminal.
