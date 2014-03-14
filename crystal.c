@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZEX 40
-#define SIZEY 20
-#define STEP 1
+#define SIZEX 	320
+#define SIZEY 	160
+#define STEP 	4
 
+#define FRAME_SKIP 100000
 
 typedef struct{
 	int x,y;
@@ -14,20 +15,24 @@ int m[SIZEX][SIZEY];
 point particle;
 
 
+int frame;
 void plot(point particle){
-	printf("\033[2J\033[1;1H");
+	if(frame++>=FRAME_SKIP){
+		frame = 0;
+		printf("\033[2J\033[1;1H");
 
-	int i,j;
-	for(i=0;i<SIZEY;i++){
-		for(j=0;j<SIZEX;j++){
-			if(m[j][i]){
-				printf("#");
-			}else if((particle.x==j) & (particle.y==i)){
-				printf("*");
-			}else
-				printf(" ");
+		int i,j;
+		for(i=0;i<SIZEY;i++){
+			for(j=0;j<SIZEX;j++){
+				if(m[j][i]){
+					printf("#");
+				}else if((particle.x==j) & (particle.y==i)){
+					printf("*");
+				}else
+					printf(" ");
+			}
+			printf("\n");
 		}
-		printf("\n");
 	}
 }
 
@@ -35,6 +40,10 @@ void create(){
 	// Create a new particle
 	particle.x = rand()%SIZEX;
 	particle.y = rand()%SIZEY;
+
+	/* // Create a new particle at the boarder
+	particle.x = (rand()%2)*(SIZEX-1);
+	particle.y = (rand()%2)*(SIZEY-1);*/
 }
 
 int isValid(){
@@ -72,7 +81,7 @@ int getStep(){
 void randomWalk(){
 	particle.x += getStep();
 	particle.y += getStep();
-	printf("particle at x:%d y:%d %d",particle.x,particle.y,touch());
+	//printf("particle at x:%d y:%d %d",particle.x,particle.y,touch());
 }
 
 void main(){
